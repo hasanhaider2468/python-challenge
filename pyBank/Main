@@ -33,8 +33,8 @@ for i in range(len(changes)-1):
         increase = change
         day_of_increase = increase_day + 1
     increase_day += 1
-decrease_day  = 0
 
+decrease_day  = 0
 day_of_decrease = 0
 for i in range(len(changes)-1):
     change = changes[i+1] - changes[i]
@@ -59,3 +59,14 @@ print("Total: " + "$" + str(total))
 print("Average Change: " + "$" + str(rounded_average))
 print("Greatest increase in profits: " + dates[date_of_highest_increase] + "   " + "$" + str(increase))
 print("Greatest decrease in profits: " + dates[date_of_highest_decrease] + "   " + "$" + str(decrease))
+
+output_file =  "analysis/results.txt"
+
+with open(output_file, "w") as datafile:
+    datafile.write("Financial Analysis" + "\n" 
+        +"------------------------------------" + "\n"
+            + "Total Months: " + str(month_counter) + "\n"
+                +"Total: " + "$" + str(total)+ "\n" 
+                    + "Average Change: " + "$" + str(rounded_average) + "\n" 
+                        + "Greatest increase in profits: " + dates[date_of_highest_increase] + "   " + "$" + str(increase) + "\n" 
+                            + "Greatest decrease in profits: " + dates[date_of_highest_decrease] + "   " + "$" + str(decrease) + "\n")
