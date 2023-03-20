@@ -1,3 +1,38 @@
-print("test")
+import os
+import csv
 
+month_counter = 0
+total = 0
+changes = []
+average = 0
+greatest_change = 0
+
+file_path = "Resources/budget_data.csv"
+with open(file_path) as csvfile:
+    
+    csvreader = csv.reader(csvfile, delimiter=',')
+
+    csv_header = next(csvreader)
+
+    for row in csvreader:
+        total = total + int(row[1])
+        month_counter += 1
+
+        num = int(row[1])
+        changes.append(num)
+
+print("Total Months: " + str(month_counter))
+print("Total: " + str(total))
+
+for i in range(len(changes)):
+    for n in range(len(changes)-1):
+        sum = changes[n-1] + changes[i] 
+        average += sum
+        if (sum) > greatest_change:
+            greatest_change = sum
+
+average = average / month_counter
+
+print("Average Change: " + str(average))
+print("Greatest change: " + str(greatest_change))
 
