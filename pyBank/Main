@@ -4,9 +4,10 @@ import csv
 month_counter = 0
 total = 0
 changes = []
+dates = []
 average = 0
-greatest_change = 0
-
+increase = 0
+decrease = 0
 file_path = "Resources/budget_data.csv"
 with open(file_path) as csvfile:
     
@@ -21,18 +22,40 @@ with open(file_path) as csvfile:
         num = int(row[1])
         changes.append(num)
 
+        date = row[0]
+        dates.append(date)
+
+increase_day  = 0
+day_of_increase = 0
+for i in range(len(changes)-1):
+    change = changes[i+1] - changes[i]
+    if change > increase:
+        increase = change
+        day_of_increase = increase_day + 1
+    increase_day += 1
+decrease_day  = 0
+
+day_of_decrease = 0
+for i in range(len(changes)-1):
+    change = changes[i+1] - changes[i]
+    if change < decrease:
+        decrease = change
+        day_of_decrease = decrease_day + 1
+    decrease_day += 1
+
+for i in range(len(changes)-1):
+    change = changes[i+1] - changes[i]
+    average = average + change 
+
+average = average / (month_counter - 1)
+rounded_average = round(average,2)
+
+date_of_highest_increase = day_of_increase
+date_of_highest_decrease = day_of_decrease
+print("Financial Analysis")
+print("------------------------------------")
 print("Total Months: " + str(month_counter))
-print("Total: " + str(total))
-
-for i in range(len(changes)):
-    for n in range(len(changes)-1):
-        sum = changes[n-1] + changes[i] 
-        average += sum
-        if (sum) > greatest_change:
-            greatest_change = sum
-
-average = average / month_counter
-
-print("Average Change: " + str(average))
-print("Greatest change: " + str(greatest_change))
-
+print("Total: " + "$" + str(total))
+print("Average Change: " + "$" + str(rounded_average))
+print("Greatest increase in profits: " + dates[date_of_highest_increase] + "   " + "$" + str(increase))
+print("Greatest decrease in profits: " + dates[date_of_highest_decrease] + "   " + "$" + str(decrease))
