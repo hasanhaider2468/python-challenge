@@ -6,8 +6,7 @@ total = 0
 changes = []
 dates = []
 average = 0
-increase = 0
-decrease = 0
+
 file_path = "Resources/budget_data.csv"
 with open(file_path) as csvfile:
     
