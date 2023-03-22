@@ -1,28 +1,38 @@
 import os
 import csv
+#importing 
 
 month_counter = 0
 total = 0
 changes = []
 dates = []
 average = 0
+ # creating variables to  use later on
 
 file_path = "Resources/budget_data.csv"
+#finding the file to work with
 with open(file_path) as csvfile:
     
     csvreader = csv.reader(csvfile, delimiter=',')
 
     csv_header = next(csvreader)
-
+    #Skips first row
     for row in csvreader:
         total = total + int(row[1])
         month_counter += 1
+        
+        #total adds the profit and losses of every row
+        #month counter finds out the total months in the data set
 
         num = int(row[1])
         changes.append(num)
+        #creating a list of all the profit and losses going row by row
 
         date = row[0]
         dates.append(date)
+        #creating a list of all the dates going row by row
+
+
 
 increase_day  = 0
 day_of_increase = 0
@@ -32,7 +42,8 @@ for i in range(len(changes)-1):
         increase = change
         day_of_increase = increase_day + 1
     increase_day += 1
-
+#for loop in which we compare two days combined change in increase .
+# also gives us the day of the increase
 decrease_day  = 0
 day_of_decrease = 0
 for i in range(len(changes)-1):
@@ -42,13 +53,18 @@ for i in range(len(changes)-1):
         day_of_decrease = decrease_day + 1
     decrease_day += 1
 
+#for loop in which we compare two days combined change in decrease .
+# also gives us the day of the decrease
+
 for i in range(len(changes)-1):
     change = changes[i+1] - changes[i]
     average = average + change 
-
+#this adds up all of the profit and loss changes between two days
 average = average / (month_counter - 1)
+#this finds the average by dividing by the total months and then rounds it
 rounded_average = round(average,2)
 
+#print statements
 date_of_highest_increase = day_of_increase
 date_of_highest_decrease = day_of_decrease
 print("Financial Analysis")
@@ -56,11 +72,11 @@ print("------------------------------------")
 print("Total Months: " + str(month_counter))
 print("Total: " + "$" + str(total))
 print("Average Change: " + "$" + str(rounded_average))
-print("Greatest increase in profits: " + dates[date_of_highest_increase] + "   " + "$" + str(increase))
+print("Greatest increase in profits: " + dates[date_of_highest_increase] + "   " + "$" + str(increase)) 
 print("Greatest decrease in profits: " + dates[date_of_highest_decrease] + "   " + "$" + str(decrease))
 
 output_file =  "analysis/results.txt"
-
+#prints to output file
 with open(output_file, "w") as datafile:
     datafile.write("Financial Analysis" + "\n" 
         +"------------------------------------" + "\n"
